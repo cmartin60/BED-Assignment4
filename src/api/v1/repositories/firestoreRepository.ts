@@ -1,4 +1,4 @@
-import { db }  from "config/firebaseConfig";
+import { db }  from "../../../../config/firebaseConfig";
 import { FieldValue, Timestamp } from "firebase-admin/firestore";
 import { RepositoryError } from "../errors/errors";
 import {
