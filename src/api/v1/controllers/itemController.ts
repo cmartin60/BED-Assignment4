@@ -1,3 +1,4 @@
+
 /**
  * Item Controller (itemController.ts)
  *
@@ -8,7 +9,9 @@
 
 import { Request, Response, NextFunction } from "express";
 import * as itemService from "../services/itemService";
-import type { Item } from "../services/itemService";
+import type { Item } from "../models/itemModel";
+import { successResponse } from "../models/responseModel";
+import { HTTP_STATUS } from "../../../constants/httpConstants";
 
 /**
  * @description Get all items.
@@ -23,7 +26,42 @@ export const getAllItems = async (
     try {
         const items: Item[] = await itemService.getAllItems();
 
-        res.status(200).json({ message: "Items Retrieved", data: items });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(items, "Items Retrieved")
+        );
+    } catch (error) {
+        next(error);
+    }
+};
+
+/**
+ * @description Get items by name.
+ * @route GET /by-name/:name
+ * @returns {Promise<void>}
+ */
+export const getItemsByName = async (
+    req: Request,
+    res: Response,
+    next: NextFunction
+): Promise<void> => {
+    try {
+        const { name } = req.params;
+        const limit = req.query.limit
+            ? parseInt(req.query.limit as string)
+            : undefined;
+
+        const items: Item[] = await itemService.getItemsByField(
+            "name",
+            name,
+            limit
+        );
+
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(
+                items,
+                `Items with name "${name}" retrieved successfully`
+            )
+        );
     } catch (error) {
         next(error);
     }
@@ -43,7 +81,9 @@ export const createItem = async (
         // call the itemService by passing the body of the request
         const newItem: Item = await itemService.createItem(req.body);
 
-        res.status(201).json({ message: "Item Created", data: newItem });
+        res.status(HTTP_STATUS.CREATED).json(
+            successResponse(newItem, "Item Created")
+        );
     } catch (error) {
         next(error);
     }
@@ -66,7 +106,9 @@ export const updateItem = async (
             req.body
         );
 
-        res.status(200).json({ message: "Item Updated", data: updatedItem });
+        res.status(HTTP_STATUS.OK).json(
+            successResponse(updatedItem, "Item Updated")
+        );
     } catch (error) {
         next(error);
     }
@@ -86,7 +128,7 @@ export const deleteItem = async (
         await itemService.deleteItem(req.params.id);
 
         // I set this to 200 but it could also be a 204 code https://developer.mozilla.org/en-US/docs/Web/HTTP/Status/204
-        res.status(200).json({ message: "Item Deleted" });
+        res.status(HTTP_STATUS.OK).json(successResponse("Item Deleted"));
     } catch (error) {
         next(error);
     }
