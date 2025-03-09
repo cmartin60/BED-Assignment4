@@ -5,10 +5,13 @@ import morgan from "morgan";
 // import setupSwagger endpoint
 import setupSwagger from "../config/swagger";
 import itemRoutes from "./api/v1/routes/itemRoutes";
-import userLoanRoutes from "./api/v1/routes/userLoanRoutes";
 import userRoutes from "./api/v1/routes/userRoutes";
 import adminRoutes from "./api/v1/routes/adminRoutes";
 import errorHandler from "./api/v1/middleware/errorHandler";
+
+import userLoanRoutes from "./api/v1/loans/userLoanRoutes";
+import officerLoanRoutes from "./api/v1/routes/officerLoanRoutes";
+import managerLoanRoutes from "./api/v1/routes/managerLoanRoutes";
 
 // initialize the express application
 const app: Express = express();
@@ -63,7 +66,10 @@ app.get("/api/v1/health", (req, res) => {
 app.use("/api/v1/items", itemRoutes);
 app.use("/api/v1/users", userRoutes);
 app.use("/api/v1/admin", adminRoutes);
-app.use("/api/v1/userLoan", userLoanRoutes);
+
+app.use("/api/v1/loans/user", userLoanRoutes);
+app.use("/api/v1/loans/officer", officerLoanRoutes);
+app.use("/api/v1/managerLoan", managerLoanRoutes);
 
 app.use(errorHandler);
 
