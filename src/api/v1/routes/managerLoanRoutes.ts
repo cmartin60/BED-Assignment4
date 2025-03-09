@@ -8,14 +8,14 @@ const router: Router = express.Router();
 router.get(
     "/:uid",
     authenticate,
-    isAuthorized({ hasRole: ["officer"], allowSameUser: true }),
+    isAuthorized({ hasRole: ["manager"], allowSameUser: true }),
     getLoan
 );
 
 router.put(
     "/:uid",
     authenticate,
-    isAuthorized({ hasRole: ["officer"], allowSameUser: true }),
+    isAuthorized({ hasRole: ["manager"], allowSameUser: true }),
     getLoan
 );
 
