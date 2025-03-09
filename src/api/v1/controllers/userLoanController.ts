@@ -5,7 +5,7 @@ import { auth } from "../../../../config/firebaseConfig";
 import { successResponse } from "../models/responseModel";
 import { HTTP_STATUS } from "../../../constants/httpConstants";
 
-export const getUserDetails = async (
+export const userLoanPost = async (
     req: Request,
     res: Response,
     next: NextFunction
