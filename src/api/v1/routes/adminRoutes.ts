@@ -22,6 +22,7 @@ router.post(
     authenticate,
     isAuthorized({ hasRole: ["admin"] }),
     setCustomClaims
+    
 );
 
 export default router;
