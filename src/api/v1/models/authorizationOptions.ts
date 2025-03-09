@@ -10,7 +10,7 @@ export interface AuthorizationOptions {
      * The middleware will grant access if the authenticated user has any of the
      * roles specified in this array.
      */
-    hasRole: Array<"admin" | "manager" | "user">;
+    hasRole: Array<"admin" | "manager" | "user" | "officer">;
 
     /**
      * When set to true, allows users to access their own resources
